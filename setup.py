@@ -11,7 +11,7 @@ class InstallLocalPackage(install):
         )
 
 
-setup(
+setup(    
     name='deformable-detr',
     version='0.0.0',
     author="fundamentalvision",
