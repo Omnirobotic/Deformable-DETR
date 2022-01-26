@@ -7,7 +7,7 @@ class InstallLocalPackage(install):
     def run(self):
         install.run(self)
         subprocess.call(
-            "python deformable/models/ops/compile/setup.py install", shell=True
+            "python deformable_detr/models/ops/compile/setup.py install", shell=True
         )
 
 
