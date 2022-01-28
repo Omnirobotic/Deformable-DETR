@@ -27,10 +27,13 @@ from torch import Tensor
 
 # needed due to empty tensor bug in pytorch and torchvision 0.5
 import torchvision
+
 major, minor, _ = torchvision.__version__.split(".")
-if int(minor) < 5 and int(minor) == 0:
+if int(minor) < 5 and int(major) == 0:
     import math
     from torchvision.ops.misc import _NewEmptyTensorOp
+
+
     def _check_size_scale_factor(dim, size, scale_factor):
         # type: (int, Optional[List[int]], Optional[float]) -> None
         if size is None and scale_factor is None:
@@ -42,6 +45,8 @@ if int(minor) < 5 and int(minor) == 0:
                 "scale_factor shape must match input shape. "
                 "Input is {}D, scale_factor size is {}".format(dim, len(scale_factor))
             )
+
+
     def _output_size(dim, input, size, scale_factor):
         # type: (int, Tensor, Optional[List[int]], Optional[float]) -> List[int]
         assert dim == 2
@@ -55,7 +60,7 @@ if int(minor) < 5 and int(minor) == 0:
         return [
             int(math.floor(input.size(i + 2) * scale_factors[i])) for i in range(dim)
         ]
-elif int(minor) < 7 and int(minor) == 0:
+elif int(minor) < 7 and int(major) == 0:
     from torchvision.ops import _new_empty_tensor
     from torchvision.ops.misc import _output_size
 
@@ -287,6 +292,7 @@ def get_sha():
 
     def _run(command):
         return subprocess.check_output(command, cwd=cwd).decode('ascii').strip()
+
     sha = 'N/A'
     diff = "clean"
     branch = 'N/A'
@@ -488,7 +494,7 @@ def interpolate(input, size=None, scale_factor=None, mode="nearest", align_corne
     This will eventually be supported natively by PyTorch, and this
     class can go away.
     """
-    if int(minor) < 7 and int(minor) == 0:
+    if int(minor) < 7 and int(major) == 0:
         if input.numel() > 0:
             return torch.nn.functional.interpolate(
                 input, size, scale_factor, mode, align_corners
@@ -496,7 +502,7 @@ def interpolate(input, size=None, scale_factor=None, mode="nearest", align_corne
 
         output_shape = _output_size(2, input, size, scale_factor)
         output_shape = list(input.shape[:-2]) + list(output_shape)
-        if int(minor) < 5 and int(minor) == 0:
+        if int(minor) < 5 and int(major) == 0:
             return _NewEmptyTensorOp.apply(input, output_shape)
         return _new_empty_tensor(input, output_shape)
     else:
@@ -511,9 +517,9 @@ def get_total_grad_norm(parameters, norm_type=2):
                             norm_type)
     return total_norm
 
+
 def inverse_sigmoid(x, eps=1e-5):
     x = x.clamp(min=0, max=1)
     x1 = x.clamp(min=eps)
     x2 = (1 - x).clamp(min=eps)
-    return torch.log(x1/x2)
-
+    return torch.log(x1 / x2)
