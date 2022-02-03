@@ -33,7 +33,7 @@ def get_extensions():
     extra_compile_args = {"cxx": []}
     define_macros = []
 
-    if torch.cuda.is_available() and CUDA_HOME is not None:
+    if CUDA_HOME is not None:
         extension = CUDAExtension
         sources += source_cuda
         define_macros += [("WITH_CUDA", None)]
@@ -65,7 +65,6 @@ setup(
     author="Weijie Su",
     url="https://github.com/fundamentalvision/Deformable-DETR",
     description="PyTorch Wrapper for CUDA Functions of Multi-Scale Deformable Attention",
-    packages=find_packages(exclude=("configs", "tests",)),
     ext_modules=get_extensions(),
     cmdclass={"build_ext": torch.utils.cpp_extension.BuildExtension},
 )
