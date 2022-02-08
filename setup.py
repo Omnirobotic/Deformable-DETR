@@ -15,7 +15,6 @@ class InstallLocalPackage(install):
                 'install'
             ],
             stdout=sys.stdout, stderr=sys.stderr, check=True,
-            env={"TORCH_CUDA_ARCH_LIST": "11.3+PTX"},
         )
 
 
