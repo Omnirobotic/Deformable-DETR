@@ -6,10 +6,14 @@ import subprocess
 class InstallLocalPackage(install):
     def run(self):
         install.run(self)
-        subprocess.call(
-            "python deformable_detr/models/ops/compile/setup.py install", shell=True
+        subprocess.run(
+            [
+                'python',
+                'deformable_detr/models/ops/compile/setup.py',
+                'install',
+            ],
+            stdout=sys.stdout, stderr=sys.stderr, check=True
         )
-
 
 setup(    
     name='deformable-detr',
