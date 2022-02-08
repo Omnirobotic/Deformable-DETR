@@ -10,12 +10,12 @@ class InstallLocalPackage(install):
         print("Running ops compilation...")
         subprocess.run(
             [
-                'TORCH_CUDA_ARCH_LIST=”11.3+PTX”',
                 'python',
                 'deformable_detr/models/ops/compile/setup.py',
                 'install'
             ],
-            stdout=sys.stdout, stderr=sys.stderr, check=True
+            stdout=sys.stdout, stderr=sys.stderr, check=True,
+            env={"TORCH_CUDA_ARCH_LIST": "11.3+PTX"},
         )
 
 
