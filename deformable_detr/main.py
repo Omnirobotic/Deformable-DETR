@@ -150,7 +150,7 @@ def main(args):
     print('number of params:', n_parameters)
 
     dataset_train = build_dataset(image_set='train', args=args)
-    dataset_val = build_dataset(image_set='validation', args=args)
+    dataset_val = build_dataset(image_set='val', args=args)
 
     if args.distributed:
         if args.cache_mode:
@@ -215,7 +215,7 @@ def main(args):
 
     if args.dataset_file == "coco_panoptic":
         # We also evaluate AP during panoptic training, on original coco DS
-        coco_val = datasets.coco.build("validation", args)
+        coco_val = datasets.coco.build("val", args)
         base_ds = get_coco_api_from_dataset(coco_val)
     else:
         base_ds = get_coco_api_from_dataset(dataset_val)
